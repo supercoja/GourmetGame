@@ -2,21 +2,6 @@ using System;
 
 namespace GameGourmet
 {
-
-    public class Response
-    {
-        public string Result { get; private set; }
-        public bool  Success { get; private set; }
-
-        public Response(string result, bool success)
-        {
-            Result = result;
-            Success = success;
-        }
-    }
-    
-    
-    
     public class GameStore
     {
         public BSTNode<Plate> StartGame()
@@ -24,7 +9,7 @@ namespace GameGourmet
             var root = new BSTNode<Plate>(new Plate("masssa"));
             var nodeLeft = new BSTNode<Plate>(new Plate("Bolo de Chocolate"));
             var nodeRight = new BSTNode<Plate>(new Plate("lasanha"));
-            
+
             root.UpdateLeftNode(nodeLeft);
             root.UpdateRightNode(nodeRight);
             nodeLeft.UpdateParentNode(root);
@@ -32,32 +17,50 @@ namespace GameGourmet
 
             return root;
         }
-        
-        
-        public static void AddNewRoot(BSTNode<Plate> root)
+
+
+        public BSTNode<Plate> AddNewRoot(BSTNode<Plate> root, string message)
         {
-            var newNode = GetNewPlate("Qual prato você pensou?:");
+            var newNode = GetNewPlate(message);
             if (newNode != null)
             {
                 var previousNode = root.Parent;
                 root.UpdateParentNode(newNode);
-                if (previousNode.Left == root)
+                if (previousNode != null)
                 {
-                    previousNode.UpdateLeftNode(newNode);
+                    if (previousNode.Left == root)
+                    {
+                        previousNode.UpdateLeftNode(newNode);
+                    }
+                    else
+                    {
+                        previousNode.UpdateRightNode(newNode);
+                    }
                 }
-                else
+                var childNode = GetNewPlate($"{newNode.Data} é __________ mas {root.Data} não.");
+                if (childNode != null)
                 {
-                    previousNode.UpdateRightNode(newNode);
+                    var parentFirstNode = newNode.Parent;
+                    newNode.UpdateParentNode(childNode);
+                    if (parentFirstNode != null)
+                    {
+                        if (parentFirstNode.Left == newNode)
+                        {
+                            parentFirstNode.UpdateLeftNode(childNode);
+                        }
+                        else
+                        {
+                            parentFirstNode.UpdateRightNode(childNode);
+                        }
+                    }
                 }
 
-//                if (newNode != null)
-  //              {
-                  var nodeChildren = GetNewPlate($"{newNode.Data} é __________ mas {root.Data} não.");
-                  
-    //            }
             }
+
+
+            return newNode;
         }
-        
+
         public static BSTNode<Plate> GetNewPlate(string message)
         {
             Console.WriteLine(message);
@@ -77,12 +80,14 @@ namespace GameGourmet
 
             return new BSTNode<Plate>(new Plate(name));
         }
-        
-        public void LookUp (BSTNode<Plate> node)
-        {   
+
+        public void LookUp(BSTNode<Plate> node)
+        {
             if (node.HasChildrens())
             {
-                this.LookUp(GetAnswer($"O prato que você escolheu é {node.Data}").Equals("S") ? node.Right : node.Left );
+                this.LookUp(GetAnswer($"O prato que você escolheu é {node.Data}").Equals("S")
+                    ? node.Right
+                    : node.Left);
             }
             else
             {
@@ -95,12 +100,17 @@ namespace GameGourmet
                 }
                 else
                 {
-                    AddNewRoot(node);
-                    
+                    var nodeParent = AddNewRoot(node, "Qual prato você pensou?:");
+                  //  var lastChild = AddNewRoot(nodeParent, $"{nodeParent.Data} é __________ mas {node.Data} não.");
+//                    node.Data;
+                    //                       lastChild.UpdateParentNode(nodeParent);
+                    // if (nodeParent.Left == null)
+                    //     nodeParent.UpdateLeftNode(lastChild);
+                   
                 }
             }
         }
-        
+
         public string GetAnswer(string message)
         {
             var answer = string.Empty;
@@ -115,6 +125,16 @@ namespace GameGourmet
             }
 
             return answer;
+        }
+
+        public void TraVersal(BSTNode<Plate> parent)
+        {
+            if (parent != null)
+            {
+                Console.WriteLine($"Current node: {parent.Data}");
+                TraVersal(parent.Left);
+                TraVersal(parent.Right);
+            }
         }
     }
 }

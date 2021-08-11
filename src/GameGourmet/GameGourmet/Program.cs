@@ -12,6 +12,7 @@ namespace GameGourmet
             var root = gameStore.StartGame();
             while (true)
             {
+                
                 Console.WriteLine("Pense em um prato que goste:");
                 var answer = gameStore.GetAnswer("Digite qualquer tecla para continuar ou Q para encerrar");
                 if (answer.Equals("Q"))
@@ -19,12 +20,8 @@ namespace GameGourmet
                     break;
                 }
                 gameStore.LookUp(root);
-                
+                gameStore.TraVersal(root);
             }
-            //GameStore store = new  GameStore();
-            //Repl repl = new Repl(Console.In, Console.Out, store);
-
-            //repl.Run();
             Console.WriteLine("Programa encerrado!");
         }
     }
