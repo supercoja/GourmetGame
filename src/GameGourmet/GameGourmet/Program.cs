@@ -4,8 +4,6 @@ namespace GameGourmet
 {
     class Program
     {
-        
-
         static void Main(string[] args)
         {
             GameStore gameStore = new GameStore();

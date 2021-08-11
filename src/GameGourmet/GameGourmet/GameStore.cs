@@ -87,7 +87,7 @@ namespace GameGourmet
         {
             if (node == null)
             {
-                Console.Write("Flaecimento");
+                Console.Write("Falecimento");
                 return;
             }
             if (node.HasChildrens())
@@ -109,7 +109,7 @@ namespace GameGourmet
                 {
                     var newChild = AddNewRoot(node, "Qual prato você pensou?:");
                     var lastChild = AddNewRoot(newChild, $"{newChild.Data} é __________ mas {node.Data} não.");
-                    newChild.UpdateParentNode(node);
+                   // newChild.UpdateParentNode(node)
                     if (node.Left == null)
                     {
                         node.UpdateLeftNode(lastChild);
@@ -118,8 +118,8 @@ namespace GameGourmet
                     {
                         node.UpdateRightNode(lastChild);
                     }
-                    
-                    lastChild.UpdateParentNode(newChild);
+/*                    
+                 //   lastChild.UpdateParentNode(newChild);
                     
                     if (lastChild.Left == null)
                     {
@@ -129,7 +129,7 @@ namespace GameGourmet
                     {
                         lastChild.UpdateRightNode(newChild);
                     }
-                    
+                    */
                     
 //                    nodeParent.UpdateParentNode(node);
   //                  lastChild.UpdateParentNode(nodeParent);
