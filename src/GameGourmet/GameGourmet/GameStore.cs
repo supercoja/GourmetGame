@@ -24,7 +24,7 @@ namespace GameGourmet
             var newNode = GetNewPlate(message);
             if (newNode != null)
             {
-                var previousNode = root.Parent;
+             /*   var previousNode = root.Parent;
                 root.UpdateParentNode(newNode);
                 if (previousNode != null)
                 {
@@ -37,8 +37,9 @@ namespace GameGourmet
                         previousNode.UpdateRightNode(newNode);
                     }
                 }
-                var childNode = GetNewPlate($"{newNode.Data} é __________ mas {root.Data} não.");
-                if (childNode != null)
+                */
+//                var childNode = GetNewPlate($"{newNode.Data} é __________ mas {root.Data} não.");
+/*                if (childNode != null)
                 {
                     var parentFirstNode = newNode.Parent;
                     newNode.UpdateParentNode(childNode);
@@ -54,6 +55,7 @@ namespace GameGourmet
                         }
                     }
                 }
+                */
 
             }
 
@@ -83,6 +85,11 @@ namespace GameGourmet
 
         public void LookUp(BSTNode<Plate> node)
         {
+            if (node == null)
+            {
+                Console.Write("Flaecimento");
+                return;
+            }
             if (node.HasChildrens())
             {
                 this.LookUp(GetAnswer($"O prato que você escolheu é {node.Data}").Equals("S")
@@ -100,8 +107,34 @@ namespace GameGourmet
                 }
                 else
                 {
-                    var nodeParent = AddNewRoot(node, "Qual prato você pensou?:");
-                  //  var lastChild = AddNewRoot(nodeParent, $"{nodeParent.Data} é __________ mas {node.Data} não.");
+                    var newChild = AddNewRoot(node, "Qual prato você pensou?:");
+                    var lastChild = AddNewRoot(newChild, $"{newChild.Data} é __________ mas {node.Data} não.");
+                    newChild.UpdateParentNode(node);
+                    if (node.Left == null)
+                    {
+                        node.UpdateLeftNode(lastChild);
+                    }
+                    else if (node.Right == null)
+                    {
+                        node.UpdateRightNode(lastChild);
+                    }
+                    
+                    lastChild.UpdateParentNode(newChild);
+                    
+                    if (lastChild.Left == null)
+                    {
+                        lastChild.UpdateLeftNode(newChild);
+                    }
+                    else if (newChild.Right == null)
+                    {
+                        lastChild.UpdateRightNode(newChild);
+                    }
+                    
+                    
+//                    nodeParent.UpdateParentNode(node);
+  //                  lastChild.UpdateParentNode(nodeParent);
+    //                Console.WriteLine("Analisar");
+                    
 //                    node.Data;
                     //                       lastChild.UpdateParentNode(nodeParent);
                     // if (nodeParent.Left == null)
