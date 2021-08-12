@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameGourmet
+namespace app
 {
     class Program
     {

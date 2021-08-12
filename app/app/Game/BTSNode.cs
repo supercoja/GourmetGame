@@ -1,4 +1,4 @@
-namespace GameGourmet
+namespace app
 {
     public class BSTNode<T>
     {

@@ -1,2 +1,0 @@
-# GourmetGame
-Gourmet Game Challenge
