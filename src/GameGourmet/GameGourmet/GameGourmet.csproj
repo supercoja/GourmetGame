@@ -11,6 +11,7 @@
       <Compile Remove="Commands.cs" />
       <Compile Remove="CommandFactory.cs" />
       <Compile Remove="Command.cs" />
+      <Compile Remove="BinaryTree.cs" />
     </ItemGroup>
 
 </Project>

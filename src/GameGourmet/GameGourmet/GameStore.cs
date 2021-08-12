@@ -1,5 +1,4 @@
 using System;
-using System.Runtime.CompilerServices;
 
 namespace GameGourmet
 {
@@ -19,18 +18,16 @@ namespace GameGourmet
             return root;
         }
 
-        public int Count { get;  set; }
-        
-        public BSTNode<Plate> AddNewRoot(BSTNode<Plate> root, string message)
+        private BSTNode<Plate> AddNewRoot(BSTNode<Plate> root, string message)
         {
             var newNode = GetNewPlate(message);
             return newNode;
         }
 
-        public static BSTNode<Plate> GetNewPlate(string message)
+        private static BSTNode<Plate> GetNewPlate(string message)
         {
             Console.WriteLine(message);
-            var name = string.Empty;
+            string name;
             while (true)
             {
                 name = Console.ReadLine();
@@ -49,28 +46,33 @@ namespace GameGourmet
 
         public void LookUp(BSTNode<Plate> node)
         {
-            if (node == null)
+            string answer;
+            while (true)
             {
-                Console.Write("Falecimento");
-                return;
+                answer = GetAnswer($"O prato que você escolheu é {node.Data} ?");
+                if ((!answer.Contains("S") && !answer.Contains("N")) || answer.Equals("ENTER"))
+                {
+                    Console.WriteLine("Resposta Inválida! Digite S para Sim ou N para Não.");
+                }
+                else
+                {
+                    break;
+                }
             }
             if (node.HasChildrens())
             {
-                this.LookUp(GetAnswer($"O prato que você escolheu é {node.Data}").Equals("S")
+                this.LookUp(answer.Equals("S")
                     ? node.Right
                     : node.Left);
             }
             else
             {
-                if (GetAnswer($"O prato que você escolheu é {node.Data}").Equals("S"))
+                if (answer.Equals("S"))
                 {
                     if (!node.HasChildrens())
                     {
                         Console.WriteLine("Acertei!");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Aertei =- sem filhos!"); 
+                        Console.WriteLine();
                     }
                 }
                 else
@@ -95,6 +97,16 @@ namespace GameGourmet
                 lastChild.UpdateRightNode(newChild);
                 lastChild.UpdateLeftNode(root);
             }
+            else if (nodeParent.Right == null)
+            {
+                var newParent = nodeParent.Parent;
+                newParent.UpdateLeftNode(lastChild);
+                root.UpdateParentNode(newChild);
+                newChild.UpdateParentNode(lastChild);
+                lastChild.UpdateParentNode(newParent);
+                lastChild.UpdateRightNode(newChild);
+                lastChild.UpdateLeftNode(root);
+            }
             else if (nodeParent.Left == root)
             {
                 nodeParent.UpdateLeftNode(lastChild);
@@ -106,10 +118,13 @@ namespace GameGourmet
             }
             else if (nodeParent.Left == null)
             {
-                RebalanceTree(nodeParent.Parent,newChild,lastChild);
-      //          root.UpdateLeftNode(lastChild);
-        //        root.UpdateRightNode(newChild);
-          //      Console.WriteLine("aqui ");
+                var newParent = nodeParent.Parent;
+                newParent.UpdateLeftNode(lastChild);
+                root.UpdateParentNode(newChild);
+                newChild.UpdateParentNode(lastChild);
+                lastChild.UpdateParentNode(newParent);
+                lastChild.UpdateRightNode(newChild);
+                lastChild.UpdateLeftNode(root);
             }
         }
 
@@ -120,6 +135,8 @@ namespace GameGourmet
             try
             {
                 answer = Console.ReadKey().Key.ToString().ToUpper();
+                Console.WriteLine("");
+                Console.WriteLine("");
             }
             catch (Exception)
             {
@@ -127,27 +144,6 @@ namespace GameGourmet
             }
 
             return answer;
-        }
-        
-        // public int GetTreeDepth()
-        // {
-        //     return this.GetTreeDepth(this.Root);
-        // }
-        //
-        // private int GetTreeDepth(Node parent)
-        // {
-        //     return parent == null ? 0 : Math.Max(GetTreeDepth(parent.LeftNode), GetTreeDepth(parent.RightNode)) + 1;
-        // }
-
-        public void TraVersal(BSTNode<Plate> parent)
-        {
-            if (parent != null)
-            {
-                Count++;
-                Console.WriteLine($"Current node: {parent.Data}");
-                TraVersal(parent.Left);
-                TraVersal(parent.Right);
-            }
         }
     }
 }

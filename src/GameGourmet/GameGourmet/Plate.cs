@@ -1,6 +1,8 @@
+using System;
+
 namespace GameGourmet
 {
-    public class Plate
+    public class Plate : IComparable<Plate>
     {
         public Plate(string name)
         {
@@ -12,6 +14,14 @@ namespace GameGourmet
         public override string ToString()
         {
             return Name;
+        }
+
+        public int CompareTo(Plate other)
+        {
+            int comp = 0;
+            if (Name.Equals(other.Name))
+                comp = 1;
+            return comp;
         }
     }
 }
