@@ -106,8 +106,10 @@ namespace GameGourmet
             }
             else if (nodeParent.Left == null)
             {
-                root.UpdateLeftNode(lastChild);
-                Console.WriteLine("aqui ");
+                RebalanceTree(nodeParent.Parent,newChild,lastChild);
+      //          root.UpdateLeftNode(lastChild);
+        //        root.UpdateRightNode(newChild);
+          //      Console.WriteLine("aqui ");
             }
         }
 
