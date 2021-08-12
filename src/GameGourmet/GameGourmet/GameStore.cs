@@ -114,44 +114,40 @@ namespace GameGourmet
                     var newChild = AddNewRoot(node, "Qual prato você pensou?:");
                     var lastChild = AddNewRoot(newChild, $"{newChild.Data} é __________ mas {node.Data} não.");
 
+                    RebalanceTree(node, newChild, lastChild);
+
+//                    lastChild.UpdateLeftNode(newChild);
+/*                    newChild.UpdateParentNode(node.Parent);
                     var nodeParent = node.Parent;
                     if (nodeParent != null)
                     {
-                        nodeParent.UpdateRightNode(lastChild);
-//                        nodeParent.UpdateLeftNode(node);
-                        
-//                        newChild.UpdateParentNode(lastChild);
-  //                      lastChild.UpdateLeftNode(newChild);
+//                        if (nodeParent.Left==newChild)
+                        if (nodeParent.Left == node)
+                        {
+                            nodeParent.UpdateLeftNode(lastChild);
+                        }
+                        else{
+                            nodeParent.UpdateRightNode(lastChild); 
+                        }
                     }
-//                    node.UpdateLeftNode(newChild);
-                    //                  node.UpdateRightNode(lastChild);
-                    //                   newChild.UpdateParentNode(node);
-                    //                 lastChild.UpdateParentNode(node);
-
-                    //                   node.UpdateParentNode();
-                    // newChild.UpdateParentNode(node)
-                    //    if (node.Left == null)
-                    //    {
-                    //        node.UpdateLeftNode(lastChild);
-                    //    }
-                    //    // else if (node.Right == null)
-                    //    // {
-                    //    //     node.UpdateRightNode(lastChild);
-                    //    // }
-                    //    
-                    // //   lastChild.UpdateParentNode(newChild);
-                    //    if (lastChild.Left == null )
-                    //        lastChild.UpdateLeftNode(newChild);
-
-                    //                  lastChild.UpdateParentNode(nodeParent);
-                    //                Console.WriteLine("Analisar");
-
-//                    node.Data;
-                    //                       lastChild.UpdateParentNode(nodeParent);
-                    // if (nodeParent.Left == null)
-                    //     nodeParent.UpdateLeftNode(lastChild);
-
+*/
                 }
+            }
+        }
+
+        static void RebalanceTree(BSTNode<Plate> root, BSTNode<Plate> newChild, BSTNode<Plate> lastChild)
+        {
+            var nodeParent = root.Parent;
+            if (nodeParent.Right == root)
+            {
+                nodeParent.UpdateRightNode(lastChild);
+                root.UpdateParentNode(newChild);
+                newChild.UpdateParentNode(lastChild);
+                lastChild.UpdateRightNode(root);
+                lastChild.UpdateLeftNode(newChild);
+//                lastChild.UpdateRightNode(root);
+  //              lastChild.UpdateLeftNode(newChild);
+                
             }
         }
 
