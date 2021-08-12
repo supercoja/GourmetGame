@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.CompilerServices;
 
 namespace GameGourmet
 {
@@ -143,11 +144,16 @@ namespace GameGourmet
                 nodeParent.UpdateRightNode(lastChild);
                 root.UpdateParentNode(newChild);
                 newChild.UpdateParentNode(lastChild);
-                lastChild.UpdateRightNode(root);
+                lastChild.UpdateRightNode(newChild);
+                lastChild.UpdateLeftNode(root);
+            }
+            else if (nodeParent.Left==root)
+            {
+                nodeParent.UpdateLeftNode(lastChild);
+                root.UpdateParentNode(newChild);
+                newChild.UpdateParentNode(lastChild);
                 lastChild.UpdateLeftNode(newChild);
-//                lastChild.UpdateRightNode(root);
-  //              lastChild.UpdateLeftNode(newChild);
-                
+                lastChild.UpdateRightNode(root);
             }
         }
 
