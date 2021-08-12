@@ -9,6 +9,7 @@ namespace GameGourmet
             GameStore gameStore = new GameStore();
             var root = gameStore.StartGame();
 Console.WriteLine("Begin:");
+gameStore.Count = 0;
             gameStore.TraVersal(root);
             while (true)
             {
@@ -20,7 +21,9 @@ Console.WriteLine("Begin:");
                     break;
                 }
                 gameStore.LookUp(root);
+                gameStore.Count = 0;
                 gameStore.TraVersal(root);
+                Console.WriteLine($"Quantos membros: {gameStore.Count}");
             }
             Console.WriteLine("Programa encerrado!");
         }

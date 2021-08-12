@@ -19,48 +19,11 @@ namespace GameGourmet
             return root;
         }
 
-
+        public int Count { get;  set; }
+        
         public BSTNode<Plate> AddNewRoot(BSTNode<Plate> root, string message)
         {
             var newNode = GetNewPlate(message);
-            if (newNode != null)
-            {
-             /*   var previousNode = root.Parent;
-                root.UpdateParentNode(newNode);
-                if (previousNode != null)
-                {
-                    if (previousNode.Left == root)
-                    {
-                        previousNode.UpdateLeftNode(newNode);
-                    }
-                    else
-                    {
-                        previousNode.UpdateRightNode(newNode);
-                    }
-                }
-                */
-//                var childNode = GetNewPlate($"{newNode.Data} é __________ mas {root.Data} não.");
-/*                if (childNode != null)
-                {
-                    var parentFirstNode = newNode.Parent;
-                    newNode.UpdateParentNode(childNode);
-                    if (parentFirstNode != null)
-                    {
-                        if (parentFirstNode.Left == newNode)
-                        {
-                            parentFirstNode.UpdateLeftNode(childNode);
-                        }
-                        else
-                        {
-                            parentFirstNode.UpdateRightNode(childNode);
-                        }
-                    }
-                }
-                */
-
-            }
-
-
             return newNode;
         }
 
@@ -73,7 +36,7 @@ namespace GameGourmet
                 name = Console.ReadLine();
                 if (string.IsNullOrEmpty(name))
                 {
-                    Console.WriteLine("Informe um novo prato");
+                    Console.WriteLine("Nome Inválido. Informe um novo prato!");
                 }
                 else
                 {
@@ -116,22 +79,6 @@ namespace GameGourmet
                     var lastChild = AddNewRoot(newChild, $"{newChild.Data} é __________ mas {node.Data} não.");
 
                     RebalanceTree(node, newChild, lastChild);
-
-//                    lastChild.UpdateLeftNode(newChild);
-/*                    newChild.UpdateParentNode(node.Parent);
-                    var nodeParent = node.Parent;
-                    if (nodeParent != null)
-                    {
-//                        if (nodeParent.Left==newChild)
-                        if (nodeParent.Left == node)
-                        {
-                            nodeParent.UpdateLeftNode(lastChild);
-                        }
-                        else{
-                            nodeParent.UpdateRightNode(lastChild); 
-                        }
-                    }
-*/
                 }
             }
         }
@@ -144,16 +91,18 @@ namespace GameGourmet
                 nodeParent.UpdateRightNode(lastChild);
                 root.UpdateParentNode(newChild);
                 newChild.UpdateParentNode(lastChild);
+                lastChild.UpdateParentNode(nodeParent);
                 lastChild.UpdateRightNode(newChild);
                 lastChild.UpdateLeftNode(root);
             }
-            else if (nodeParent.Left==root)
+            else if (nodeParent.Left == root)
             {
                 nodeParent.UpdateLeftNode(lastChild);
                 root.UpdateParentNode(newChild);
                 newChild.UpdateParentNode(lastChild);
-                lastChild.UpdateLeftNode(newChild);
-                lastChild.UpdateRightNode(root);
+                lastChild.UpdateParentNode(nodeParent);
+                lastChild.UpdateRightNode(newChild);
+                lastChild.UpdateLeftNode(root);
             }
         }
 
@@ -172,11 +121,22 @@ namespace GameGourmet
 
             return answer;
         }
+        
+        // public int GetTreeDepth()
+        // {
+        //     return this.GetTreeDepth(this.Root);
+        // }
+        //
+        // private int GetTreeDepth(Node parent)
+        // {
+        //     return parent == null ? 0 : Math.Max(GetTreeDepth(parent.LeftNode), GetTreeDepth(parent.RightNode)) + 1;
+        // }
 
         public void TraVersal(BSTNode<Plate> parent)
         {
             if (parent != null)
             {
+                Count++;
                 Console.WriteLine($"Current node: {parent.Data}");
                 TraVersal(parent.Left);
                 TraVersal(parent.Right);

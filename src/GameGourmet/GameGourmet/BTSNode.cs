@@ -8,6 +8,8 @@ namespace GameGourmet
         {
             Data = value;
         }
+        
+        public int Count { get; private set; }
 
         public T Data { get; private set; }
         public BSTNode<T> Parent { get; private set; }
@@ -43,11 +45,13 @@ namespace GameGourmet
         {
             return this.Left;
         }
+        
 
         public void PreOrderTraversal(BSTNode<T> parent)
         {
             if (parent != null)
             {
+                Count++;
                 PreOrderTraversal(parent.Left);
                 PreOrderTraversal(parent.Right);
             }
