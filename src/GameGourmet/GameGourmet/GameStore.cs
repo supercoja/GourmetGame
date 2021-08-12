@@ -6,7 +6,7 @@ namespace GameGourmet
     {
         public BSTNode<Plate> StartGame()
         {
-            var root = new BSTNode<Plate>(new Plate("masssa"));
+            var root = new BSTNode<Plate>(new Plate("massa"));
             var nodeLeft = new BSTNode<Plate>(new Plate("Bolo de Chocolate"));
             var nodeRight = new BSTNode<Plate>(new Plate("lasanha"));
 
@@ -104,42 +104,53 @@ namespace GameGourmet
                     {
                         Console.WriteLine("Acertei!");
                     }
+                    else
+                    {
+                        Console.WriteLine("Aertei =- sem filhos!"); 
+                    }
                 }
                 else
                 {
                     var newChild = AddNewRoot(node, "Qual prato você pensou?:");
                     var lastChild = AddNewRoot(newChild, $"{newChild.Data} é __________ mas {node.Data} não.");
-                   // newChild.UpdateParentNode(node)
-                    if (node.Left == null)
+
+                    var nodeParent = node.Parent;
+                    if (nodeParent != null)
                     {
-                        node.UpdateLeftNode(lastChild);
+                        nodeParent.UpdateRightNode(lastChild);
+//                        nodeParent.UpdateLeftNode(node);
+                        
+//                        newChild.UpdateParentNode(lastChild);
+  //                      lastChild.UpdateLeftNode(newChild);
                     }
-                    else if (node.Right == null)
-                    {
-                        node.UpdateRightNode(lastChild);
-                    }
-/*                    
-                 //   lastChild.UpdateParentNode(newChild);
-                    
-                    if (lastChild.Left == null)
-                    {
-                        lastChild.UpdateLeftNode(newChild);
-                    }
-                    else if (newChild.Right == null)
-                    {
-                        lastChild.UpdateRightNode(newChild);
-                    }
-                    */
-                    
-//                    nodeParent.UpdateParentNode(node);
-  //                  lastChild.UpdateParentNode(nodeParent);
-    //                Console.WriteLine("Analisar");
-                    
+//                    node.UpdateLeftNode(newChild);
+                    //                  node.UpdateRightNode(lastChild);
+                    //                   newChild.UpdateParentNode(node);
+                    //                 lastChild.UpdateParentNode(node);
+
+                    //                   node.UpdateParentNode();
+                    // newChild.UpdateParentNode(node)
+                    //    if (node.Left == null)
+                    //    {
+                    //        node.UpdateLeftNode(lastChild);
+                    //    }
+                    //    // else if (node.Right == null)
+                    //    // {
+                    //    //     node.UpdateRightNode(lastChild);
+                    //    // }
+                    //    
+                    // //   lastChild.UpdateParentNode(newChild);
+                    //    if (lastChild.Left == null )
+                    //        lastChild.UpdateLeftNode(newChild);
+
+                    //                  lastChild.UpdateParentNode(nodeParent);
+                    //                Console.WriteLine("Analisar");
+
 //                    node.Data;
                     //                       lastChild.UpdateParentNode(nodeParent);
                     // if (nodeParent.Left == null)
                     //     nodeParent.UpdateLeftNode(lastChild);
-                   
+
                 }
             }
         }
@@ -152,7 +163,7 @@ namespace GameGourmet
             {
                 answer = Console.ReadKey().Key.ToString().ToUpper();
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 Console.WriteLine("Resposta Inválida!");
             }

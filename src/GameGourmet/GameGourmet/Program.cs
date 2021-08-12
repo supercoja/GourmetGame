@@ -8,6 +8,8 @@ namespace GameGourmet
         {
             GameStore gameStore = new GameStore();
             var root = gameStore.StartGame();
+Console.WriteLine("Begin:");
+            gameStore.TraVersal(root);
             while (true)
             {
                 
