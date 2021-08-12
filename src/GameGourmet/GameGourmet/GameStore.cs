@@ -104,6 +104,11 @@ namespace GameGourmet
                 lastChild.UpdateRightNode(newChild);
                 lastChild.UpdateLeftNode(root);
             }
+            else if (nodeParent.Left == null)
+            {
+                root.UpdateLeftNode(lastChild);
+                Console.WriteLine("aqui ");
+            }
         }
 
         public string GetAnswer(string message)
