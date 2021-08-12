@@ -49,6 +49,7 @@ namespace GameGourmet
             string answer;
             while (true)
             {
+                Console.Clear();
                 answer = GetAnswer($"O prato que você escolheu é {node.Data} ?");
                 if ((!answer.Contains("S") && !answer.Contains("N")) || answer.Equals("ENTER"))
                 {
